@@ -1,0 +1,2 @@
+# CWC-TRADERS-
+Fully Automated 
