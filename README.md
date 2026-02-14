@@ -1,118 +1,125 @@
 # CWC Traders Portal
 
-A Robotrader-style portal for onboarding users, managing subscriptions, and controlling MT4/MT5 Expert Advisors (EAs) through a secure backend bridge.
+CWC Traders Portal is a Robotrader-style platform for users to manage subscriptions, connect MT4/MT5 terminals, and control Expert Advisors (EAs) safely through a server bridge.
 
-## What This Project Is Building
+## 1) Core System Components
 
-Core goals:
-- User authentication (signup/login)
-- Trading portal dashboard
-- MT4/MT5 broker account connection flow
-- EA lifecycle controls (start/stop/risk)
-- Production backend + database
-- Mobile-friendly web experience
+You need three layers:
 
-## Recommended Architecture
+### Frontend (Web/App UI)
+- Build with **React.js** or **Next.js** for web.
+- Use **Flutter** if you also want a native mobile app.
+- Main features:
+  - Login / signup
+  - User dashboard
+  - EA controls (start/stop, risk)
+  - Subscription management
+- Must be responsive/mobile-friendly.
+
+### Backend (Server & API)
+- Build with **Node.js**, **Django**, or **FastAPI**.
+- Stores:
+  - Users
+  - Subscription status
+  - Trade signals/commands
+  - Broker account telemetry from EA
+- Exposes API endpoints so EAs can:
+  - Pull commands/signals
+  - Push account and trade updates
+
+### Trading Bridge (EA + Broker)
+- User installs your EA in MT4/MT5 terminal.
+- EA connects to your API with `WebRequest`.
+- EA executes trades on the user account.
+- **Only the EA talks to the broker directly** (server does not log in to user broker accounts).
+
+## 2) Recommended Architecture
 
 ```text
-User
-  ↓
-Frontend (Next.js / React)
-  ↓ HTTPS
-Backend API (Node.js or FastAPI)
-  ↓
-PostgreSQL
-  ↓
-Signal + Account APIs
-  ↓
-MT4/MT5 EA Bridge (installed on client terminal)
-  ↓
-Broker
+User → Web App → Your Server → MT4/MT5 EA → Broker
 ```
 
-### Why an EA Bridge Is Required
-Web apps cannot directly place trades on most MT4/MT5 brokers. The standard pattern is:
+Why this model:
+- Safer and scalable
+- User keeps account control
+- Your platform only sends signals/commands and receives status
 
-1. EA polls (or streams from) your server
-2. EA receives authorized signals/settings
-3. EA executes orders locally on the user's terminal/account
-4. EA posts account/trade status back to your backend
+## 3) Server & Hosting
 
-## Product Modules
+Recommended baseline:
+- **VPS:** Ubuntu 22.04, minimum 2–4GB RAM
+- **Stack:** Node.js or Python, PostgreSQL/MySQL, Nginx, SSL
 
-### 1) Frontend Portal
-- Auth pages (signup/login/reset)
-- Dashboard overview (status, balance, equity, open trades)
-- Account connection instructions
-- Bot controls (risk %, symbols, start/stop)
-- Subscription/billing pages
-- Trade history and logs
+Server responsibilities:
+- User authentication/authorization
+- Subscription lifecycle and access control
+- Signal storage and delivery
+- EA communication endpoints
 
-### 2) Backend Platform
-- Auth + role-based access
-- Subscription enforcement
-- Signal orchestration
-- EA/device registration
-- Broker account telemetry storage
-- Admin panel APIs
+## 4) MT4/MT5 EA Logic
 
-### 3) MT4/MT5 EA Bridge
-- Secure API token auth
-- Pull strategy settings/signals
-- Send heartbeats + account metrics
-- Execute/manage trades
-- Fail-safe logic if API unavailable
+The EA should poll your server for bot commands (buy/sell, risk %, start/stop):
 
-## Suggested Tech Stack
+```mql4
+string serverURL = "https://yourdomain.com/api/signal";
 
-- **Frontend:** Next.js + Tailwind CSS
-- **Backend:** Node.js (NestJS/Express) or Python (FastAPI)
-- **Database:** PostgreSQL
-- **Cache/Queue:** Redis + BullMQ/Celery
-- **Hosting:** Ubuntu VPS (Hetzner / Contabo / DigitalOcean)
-- **Reverse Proxy:** Nginx
-- **TLS:** Let's Encrypt SSL
+void OnTick()
+{
+   string response = WebRequest("GET", serverURL, "", "", 0, "", "");
+   if(response == "BUY") { OrderSend(...); }
+   else if(response == "SELL") { OrderSend(...); }
+}
+```
 
-## MVP Delivery Plan
+Important:
+- Users must allow your domain in **MT4/MT5 WebRequest settings**.
+- Include retry/fail-safe behavior if API is temporarily unavailable.
 
-### Phase 1 — Foundation
-- Setup monorepo/app structure
-- Implement auth + protected dashboard
-- Add subscription model and entitlement checks
+## 5) Optional Professional Broker Integration
 
-### Phase 2 — EA Connectivity
-- Build EA registration flow
-- Implement `/api/signal` and `/api/heartbeat`
-- Store account stats + terminal status
+For advanced enterprise setups only:
+- FIX API
+- MT5 Manager API
 
-### Phase 3 — Trading Controls
-- Add bot start/stop and risk controls
-- Add audit logs and command history
-- Add demo-account testing workflows
+These options usually require broker agreements and are harder to obtain. Most startups should begin with:
 
-### Phase 4 — Production Hardening
-- Monitoring + alerts
-- Retry/fallback handling
-- Backups and security review
-- Billing automation (Stripe/PayFast/PayPal)
+```text
+EA ↔ Server ↔ Broker
+```
 
-## Security Checklist
+## 6) Dashboard / User Portal Features
 
-- JWT/session hardening
-- Device-bound EA tokens
-- Request signing + timestamp validation
-- Rate limiting and WAF rules
-- Encrypted secrets management
-- Full audit trail for all trade commands
+Minimum practical dashboard:
+- Connect trading account (via EA registration)
+- Show balance/equity/open trades
+- Activate/stop bots
+- Risk management slider/controls
+- Trade history
+- Subscription status/expiry
 
-## Compliance & Legal Notes
+## 7) Payments
 
-If operating in South Africa, consult regulatory counsel regarding FSCA obligations. For most early-stage deployments, position the product as a software platform (not managed funds), include risk disclosures, and avoid profit guarantees.
+Supported gateways (example):
+- PayFast (South Africa)
+- Stripe
+- PayPal
 
-## Immediate Next Steps
+Post-payment automation:
+- Activate subscription automatically
+- Grant portal access
+- Send EA download/setup instructions
 
-1. Approve stack (Next.js + FastAPI or Next.js + Node)
-2. Scaffold frontend and backend services
-3. Implement auth and subscription entities
-4. Define EA API contract (`signal`, `heartbeat`, `status`, `orders`)
-5. Run end-to-end demo on MT5 demo account
+## 8) Start Small (MVP Roadmap)
+
+1. Build login + dashboard + subscription logic
+2. Create EA that connects to your API
+3. Deploy backend/frontend on VPS
+4. Test with demo broker accounts
+5. Gradually add:
+   - Trade history depth
+   - Multi-bot management
+   - Notifications and alerts
+
+## Compliance Note
+
+If you operate in South Africa and provide paid trading-related software/signals, get legal guidance on FSCA-related obligations. Position the product as software infrastructure, include clear risk disclosures, and avoid guaranteed-profit claims.
