@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CWC Traders Pro App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav">
+        <div class="brand">CWC Traders Pro</div>
+        <div class="nav-actions">
+          <a class="btn btn-secondary" href="#broker-network">Broker Servers</a>
+          <a class="btn btn-primary" href="#mobile-app">Launch App</a>
+        </div>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-content">
+          <p class="eyebrow">Institutional Automation + Multi-Broker Execution</p>
+          <h1>Professional Trading Portal + Mobile App for Live Broker-Server Trading</h1>
+          <p>
+            Run EA Merge, RoboTrader, and Take-Profit Signals in one professional platform
+            with low-latency broker server routing, real-time risk controls, and synced mobile execution.
+          </p>
+          <div class="hero-actions">
+            <a href="#portal" class="btn btn-primary">Open Trading Workspace</a>
+            <a href="#infrastructure" class="btn btn-secondary">View Infrastructure</a>
+          </div>
+        </div>
+
+        <aside class="status-panel">
+          <h3>Live System Status</h3>
+          <p><span class="dot live"></span> Broker Gateway: Connected</p>
+          <p><span class="dot live"></span> Price Feed: 22ms average latency</p>
+          <p><span class="dot live"></span> Strategy Engine: 9 bots active</p>
+          <p><span class="dot warn"></span> Risk Event Monitor: 1 warning</p>
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section id="portal" class="section">
+        <h2>Pro Trading Modules</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>EA Merge Studio</h3>
+            <p>Merge and stack EA logic with portfolio-level risk throttles and broker-aware execution profiles.</p>
+            <ul>
+              <li>Strategy merge pipelines</li>
+              <li>MT4 / MT5 / API deployment targets</li>
+              <li>Backtest-to-live promotion flow</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>RoboTrader Command</h3>
+            <p>Operate robots in real-time with execution guardrails, volatility filters, and account segmentation.</p>
+            <ul>
+              <li>Bot cluster monitoring</li>
+              <li>Emergency flatten-all control</li>
+              <li>Real-time drawdown circuit breakers</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Take-Profit Signals Pro</h3>
+            <p>Integrate signal ideas inspired by <strong>take-profit-signals.co.za</strong> and auto-route approved setups.</p>
+            <ul>
+              <li>Signal confidence + quality scoring</li>
+              <li>Auto TP ladder placement</li>
+              <li>Signal-to-execution mapping rules</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="broker-network" class="section section-contrast">
+        <h2>Broker Server Network</h2>
+        <p class="section-intro">
+          Connect the app to broker servers for live trade execution through secure gateways and smart routing.
+        </p>
+        <div class="card-grid broker-grid">
+          <article class="card">
+            <h3>Execution Gateway</h3>
+            <ul>
+              <li>FIX/API bridge for broker connectivity</li>
+              <li>Auto failover across primary/backup routes</li>
+              <li>Order acknowledgement and retry handling</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Broker Profiles</h3>
+            <ul>
+              <li>Per-broker symbol mapping and margin rules</li>
+              <li>Spread and commission-aware routing</li>
+              <li>Session window controls by market</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Compliance + Security</h3>
+            <ul>
+              <li>API key vault and encrypted credentials</li>
+              <li>Audit trail for every signal and order</li>
+              <li>Role-based access + 2FA enforcement</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="infrastructure" class="section">
+        <h2>Infrastructure for Pro Traders</h2>
+        <div class="metrics-grid">
+          <div class="metric"><strong>99.95%</strong><span>Uptime target</span></div>
+          <div class="metric"><strong>&lt;30ms</strong><span>Order routing latency</span></div>
+          <div class="metric"><strong>24/7</strong><span>Server health monitoring</span></div>
+          <div class="metric"><strong>256-bit</strong><span>Data encryption</span></div>
+        </div>
+      </section>
+
+      <section id="mobile-app" class="section app-section">
+        <h2>CWC Traders Pro Mobile App</h2>
+        <p class="section-intro">
+          Full mobile control for broker-connected trading accounts, automated bots, and signal execution.
+        </p>
+        <div class="app-layout">
+          <div class="phone-mockup">
+            <div class="screen">
+              <h4>Execution Dashboard</h4>
+              <p>Broker: Live ✅</p>
+              <p>EURUSD Buy · Routed in 18ms</p>
+              <p>TP1 secured · Stop moved to BE</p>
+              <p>RoboTrader Delta · Active</p>
+            </div>
+          </div>
+          <div class="feature-list">
+            <h3>App Capabilities</h3>
+            <ul>
+              <li>Live broker account sync and order control</li>
+              <li>Push alerts for entries, TP/SL events, and risk warnings</li>
+              <li>One-tap kill switch across all bots and accounts</li>
+              <li>Biometric login and secure session controls</li>
+              <li>Performance analytics by strategy, broker, and session</li>
+            </ul>
+            <div class="hero-actions">
+              <a href="#" class="btn btn-primary">Request Pro Demo</a>
+              <a href="#" class="btn btn-secondary">Get iOS / Android Build</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        © <span id="year"></span> CWC Traders Pro. Professional automated trading with broker-server connectivity.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
