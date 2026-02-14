@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CWC Traders Portal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>CWC Traders Portal</h1>
+        <p class="subtitle">Trade faster with real-time style insights.</p>
+      </div>
+      <div class="badge" id="marketStatus">Market Open</div>
+    </header>
+
+    <main class="layout">
+      <section class="card">
+        <h2>Watchlist</h2>
+        <ul id="watchlist" class="watchlist"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Quick Trade</h2>
+        <form id="tradeForm" class="trade-form">
+          <label>
+            Symbol
+            <select id="symbol"></select>
+          </label>
+          <label>
+            Side
+            <select id="side">
+              <option value="BUY">BUY</option>
+              <option value="SELL">SELL</option>
+            </select>
+          </label>
+          <label>
+            Quantity
+            <input id="quantity" type="number" min="1" value="10" required />
+          </label>
+          <button type="submit">Place Order</button>
+        </form>
+        <p id="tradeResult" class="muted">No orders placed yet.</p>
+      </section>
+
+      <section class="card">
+        <h2>Portfolio Summary</h2>
+        <div class="summary-grid">
+          <article>
+            <h3>Balance</h3>
+            <p id="balance">$100,000.00</p>
+          </article>
+          <article>
+            <h3>Unrealized P/L</h3>
+            <p id="unrealized">$0.00</p>
+          </article>
+          <article>
+            <h3>Open Positions</h3>
+            <p id="positions">0</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Recent Orders</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Symbol</th>
+              <th>Side</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody">
+            <tr>
+              <td colspan="6" class="muted">No orders yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
